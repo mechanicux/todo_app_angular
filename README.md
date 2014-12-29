@@ -12,3 +12,5 @@ Still left to do:
 - Center list
 - Work on server side
 - Tabs/categories/lists
+- Make sorting case insensitive
+- Figure out lumx label for priority
