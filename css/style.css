@@ -1,0 +1,51 @@
+fhtml {
+	font-family: 'Roboto', sans-serif;
+}
+
+.strike {
+	text-decoration: line-through;
+}
+
+h1 {
+	font-weight: lighter;
+}
+
+#newTask {
+}
+
+.container {
+  @include outer-container;
+
+
+  .content {
+    @include span-columns(8);
+  }
+
+    .sidebar {
+    @include span-columns(4);
+  }
+
+
+}
+
+.row {
+	padding-bottom: 1em;
+}
+
+.toDoList {
+	background-color: #fff;
+	padding: 1.5em;
+	box-shadow: 
+}
+
+.text-field--is-focused .text-field__label {
+    color: #009688;
+}
+
+.text-field:after {
+	background-color: #009688;
+}
+
+/*.text-field--fixed-label {
+    padding-top: 1em;
+}*/

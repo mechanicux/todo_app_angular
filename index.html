@@ -1,0 +1,117 @@
+<!doctype html>
+
+<html ng-app="todoApp">
+<head>
+	<meta charset="utf-8">
+	<title>To do app </title>
+
+	<link href='http://fonts.googleapis.com/css?family=Roboto:500,900,400italic,100,300,700,100italic,300italic,400' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="bower_components/lumx/dist/css/lumx.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+
+		<script src="bower_components/jquery/dist/jquery.js"></script>
+		<script src="bower_components/jquery.transit/jquery.transit.js"></script>
+		<script src="bower_components/velocity/velocity.js"></script>
+		<script src="bower_components/moment/min/moment-with-locales.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+		<script src="bower_components/lumx/dist/js/lumx.js"></script> 
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.8/angular-route.min.js"></script>
+		<script src="js/app.js"></script>
+
+
+
+</head>
+
+<body>
+
+<div class="grid">
+	<div class="grid__col6 toDoList" ng-controller="ListController">
+
+
+		
+		<h1>MY TO-DO LIST</h1>
+
+
+		<!-- Add a new task here -->
+
+		<lx-text-field id="newTask" label="Add a new task..." required>
+			<input type="text" ng-model="newItem">
+		</lx-text-field>
+
+		<div class="row optional" ng-show="newItem">
+
+			<lx-date-picker model="datepicker.date" label="Task due on:"></lx-date-picker> 
+
+  	<lx-select ng-model="selects.selectedPriority" placeholder="Priority" choices="priorities">
+
+		        <lx-select-selected>
+		            {{ $selected.name }}
+		        </lx-select-selected>
+
+		        <lx-select-choices>
+		            {{ $choice.name }}
+		        </lx-select-choices>
+
+	</lx-select>  
+
+		</div> <!-- optional task properties -->
+
+		<div class="row">
+
+			<button class="btn btn--m btn--raised bgc-teal-500 tc-teal-50" lx-ripple="tc-teal-50" ng-click="addToList(newItem)">Add to list</button>
+
+		</div>
+
+
+		<!-- Display all tasks -->
+	<div class="row">
+			<ul class="list">
+				<li class="list-row" ng-repeat="item in items | orderBySetFilter:filterName track by $index">
+					<div class="checkbox">
+						<input type="checkbox" id="checkbox{{item.name}}" class="checkbox__input" ng-model="item.checked" ng-click="countUpdate(item)"></input>
+						<label for="checkbox{{item.name}}" class="checkbox__label" ng-class="{'strike': item.checked}">
+							{{item.name}} DUE ON {{item.date_due}} Priority: {{item.priority}}
+						</label>
+					</div>
+				</li>
+			</ul>
+	</div>
+			
+		<!-- Sort tasks by alphabetical order, by date due or priority -->
+
+		<lx-dropdown ng-show="items[0] != null">
+			<button class="btn btn--m btn--raised bgc-teal-500 tc-teal-50" lx-ripple="tc-teal-50" lx-dropdown-toggle>Sort by <i class="mdi mdi--more-vert"></i>
+			</button>
+
+    		<lx-dropdown-menu>
+        		<ul class="list">
+        	    	<li><a ng-click="setFilter('name')" class="dropdown-link">A-Z</a></li>
+        	    	<li><a ng-click="setFilter('reverse')" class="dropdown-link">Z-A</a></li>
+        	    	<li><a ng-click="setFilter('date')" class="dropdown-link">Date due</a></li>
+        	    	<li><a ng-click="setFilter('priority')" class="dropdown-link">Priority</a></li>
+
+	    	    </ul>
+	    	</lx-dropdown-menu>
+		</lx-dropdown>
+
+		<!-- Select/unselect all -->
+
+		<button ng-show="items[0] != null" ng-click="manageAll()" class="btn btn--m btn--raised bgc-teal-500 tc-teal-50" lx-ripple="tc-teal-50">
+			{{manage}} all
+		</button>
+
+
+		<!-- Clear tasks done (only appears when at least one task is selected) -->
+
+		<button ng-hide="count == 0" class="btn btn--m btn--raised bgc-teal-500 tc-teal-50" lx-ripple="tc-teal-50" ng-click="removeFromList()">Clear {{count}} item<span ng-show="count != 1">s</span></button>
+
+	</div> <!-- grid col 4 -->
+</div> <!-- grid -->
+
+
+
+
+</body>
+</html>
